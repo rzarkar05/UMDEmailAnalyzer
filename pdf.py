@@ -19,10 +19,10 @@ def get_path(input):
 
 def return_df(input):
     if input == 'default':
-        doc1 = pdf_to_string(get_path('pdf1.pdf'))
-        doc2 = pdf_to_string(get_path('pdf2.pdf'))
-        doc3 = pdf_to_string(get_path('pdf3.pdf'))
-        doc4 = pdf_to_string(get_path('pdf4.pdf'))
+        doc1 = pdf_to_string('/resources/zPDFS/pdf1.pdf')
+        doc2 = pdf_to_string('/resources/zPDFS/pdf2.pdf')
+        doc3 = pdf_to_string('/resources/zPDFS/pdf3.pdf')
+        doc4 = pdf_to_string('/resources/zPDFS/pdf4.pdf')
         df = pd.DataFrame({'docs':[doc1,doc2,doc3,doc4]})
         return df
         return doc1

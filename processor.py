@@ -1,24 +1,32 @@
 #IMPORTS
+import string
 from sklearn.model_selection import train_test_split
 from sklearn.pipeline import Pipeline
 from sklearn.svm import LinearSVC
 from sklearn.feature_extraction.text import TfidfVectorizer
 from nltk.sentiment.vader import SentimentIntensityAnalyzer
-import joblib 
-import os
 import pdf
 import spacy
 import pandas as pd
 
-'''
-#SPAM MODEL CREATION(ALREADY LOADED)
-emails['length'] = emails['text'].apply(len)
-emails['punctuation'] = emails['text'].apply(lambda x: sum(1 for char in x if char in string.punctuation))
-X = emails['text']
-y = emails['spam']
-#Runs a train/test split
-X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.33, random_state=42)
-'''
+def model():
+    emails = pd.read_csv('resources/zPDFS/emails.csv')
+    emails = emails.drop_duplicates()
+    emails['length'] = emails['text'].apply(len)
+    emails['punctuation'] = emails['text'].apply(lambda x: sum(1 for char in x if char in string.punctuation))
+    X = emails['text']
+    y = emails['spam']
+    #Runs a train/test split
+    X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.33, random_state=42)
+    #Makes a pipeline for vectorizing(words to numbers) and then classifying(trains model)
+    spam_model = Pipeline([('tfidf', TfidfVectorizer()),
+                     ('clf', LinearSVC()),
+    ])
+    #Feed data through pipeline --- MODEL CREATED(Ran tests and got 99% accuracy)
+    spam_model.fit(X_train, y_train)
+    return spam_model
+
+loaded_spam_model = model()
 
 ##CREATES DATAFRAME
 def create_df(input):
@@ -26,8 +34,6 @@ def create_df(input):
     df = pdf.return_df(input)
     #SPAM
     nlp = spacy.load('en_core_web_md')
-    model_path = os.path.join(os.getcwd(), 'resources', 'spam_model.pkl')
-    loaded_spam_model = joblib.load(model_path)
     df['spam'] = loaded_spam_model.predict(df['docs'])
     #GRADE DISPLAYER
     def find_assignment_grades(text):

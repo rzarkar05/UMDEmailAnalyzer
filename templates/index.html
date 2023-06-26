@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>UMD Email Analyzer</title>
+    <meta name="keywords" content="">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <style>
+      table {
+        width: 100%;
+        border-collapse: collapse;
+      }
+
+      table th,
+      table td {
+        padding: 8px;
+        text-align: left;
+        border-bottom: 1px solid #ddd;
+      }
+
+      table th {
+        background-color: #f2f2f2;
+      }
+
+      table tr:nth-child(even) {
+        background-color: #f9f9f9;
+      }
+    </style>
+
+</head>
+<body>
+    <h1>
+        Email Analyzer 
+    </h1> <span>    Note this is simply a demonstrative adaptation of the google api version made for UMD student organizations and does not have any of the most of the functionality of the full application</span>
+    <p>|</p>
+    <span>
+      <button onclick="window.location.href = './raw';">Raw</button> <button onclick="window.location.href = './dates';">By Date</button> <button onclick="window.location.href = './graded';"> Graded </button> <button onclick="window.location.href = './sentiment';">Sentiment</button> <button onclick="window.location.href = './spam';">Spam</button>
+    </span>
+    <table>
+        <thead>
+          <tr>
+            {% for column in df.columns %}
+              <th>{{ column }}</th>
+            {% endfor %}
+          </tr>
+        </thead>
+        <tbody>
+          {% for row in df.values %}
+            <tr>
+              {% for value in row %}
+                <td>{{ value }}</td>
+              {% endfor %}
+            </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+      <button onclick="window.location.href = './images';">See Emails</button>
+</body>
+</html>

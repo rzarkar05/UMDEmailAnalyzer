@@ -25,7 +25,7 @@ pathy==0.10.2
 preshed==3.0.8
 pydantic==1.10.9
 PyPDF2==3.0.1
-python-dateutil==2.8.2
+python-dateutil==0.21.1
 python-dotenv==1.0.0
 pytz==2023.3
 PyYAML==6.0
